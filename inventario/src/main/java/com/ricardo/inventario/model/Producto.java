@@ -1,0 +1,47 @@
+package com.ricardo.inventario.model;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
+import java.util.Optional;
+@Entity
+@Table(name = "productos")
+public class Producto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    private Long id;
+    @NotBlank(message = "El Nombre Es Obligatorio")
+    private String name;
+    @NotNull(message = "EL Precio Es Obligatorio")
+    @Positive(message = "El Precion Debe Ser Mayoy A 0")
+    private  Double price;
+
+    public Producto(){
+    }
+    public Producto(Long id, String name, Double price){
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+    public Long getId(){
+        return id;
+    }
+    public String getName(){
+        return name;
+    }
+    public Double getPrice(){
+        return price;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+}
