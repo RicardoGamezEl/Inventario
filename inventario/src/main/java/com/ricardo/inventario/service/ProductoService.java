@@ -1,10 +1,15 @@
 package com.ricardo.inventario.service;
+
 import com.ricardo.inventario.model.Producto;
 import com.ricardo.inventario.repository.ProductoRepository;
 import org.springframework.stereotype.Service;
 
+import com.ricardo.inventario.dto.ProductoRequestDTO;
+import com.ricardo.inventario.dto.ProductoResponseDTO;
+
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class ProductoService {
     private final ProductoRepository productoRepository;
@@ -12,14 +17,31 @@ public class ProductoService {
         this.productoRepository = productoRepository;
     }
 
-    public List<Producto> obtenerProductos(){
-        return productoRepository.findAll();
+    public List<ProductoResponseDTO> obtenerProductos(){
+        return productoRepository.findAll()
+                .stream()
+                .map(producto -> new ProductoResponseDTO(
+                        producto.getId(),
+                        producto.getName(),
+                        producto.getPrice()
+                ))
+                .toList();
     }
 
-    public Producto agregarProducto(Producto producto){
-        return productoRepository.save(producto);
-    }
+    public ProductoResponseDTO agregarProducto(ProductoRequestDTO dto){
+        Producto producto = new Producto();
 
+        producto.setName(dto.getName());
+        producto.setPrice(dto.getPrice());
+
+        Producto productoGuardado =
+                productoRepository.save(producto);
+        return new ProductoResponseDTO(
+                productoGuardado.getId(),
+                productoGuardado.getName(),
+                productoGuardado.getPrice()
+        );
+    }
     public void eliminarProducto(Long id) {
         productoRepository.deleteById(id);
     }
