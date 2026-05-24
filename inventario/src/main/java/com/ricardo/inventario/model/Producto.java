@@ -21,17 +21,21 @@ public class Producto {
     @Positive(message = "El Precion Debe Ser Mayoy A 0")
     private  Double price;
 
+    private int stock;
+
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
     public Producto(){
     }
-    public Producto(Long id, String name, Double price){
+    public Producto(Long id, String name, Double price, int stock){
         this.id = id;
         this.name = name;
         this.price = price;
+        this.stock = stock;
     }
+
     public Long getId(){
         return id;
     }
@@ -40,6 +44,9 @@ public class Producto {
     }
     public Double getPrice(){
         return price;
+    }
+    public int getStock(){
+        return stock;
     }
     public Categoria getCategoria(){
         return categoria;
@@ -53,6 +60,9 @@ public class Producto {
     }
     public void setPrice(Double price) {
         this.price = price;
+    }
+    public void setStock(int stock){
+        this.stock = stock;
     }
     public void setCategoria(Categoria categoria){
         this.categoria = categoria;

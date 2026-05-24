@@ -33,8 +33,8 @@ public class CategoriaController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminacion De Una Categoria Por Id")
-    public String eliminarCategoria(Long id){
+    public void eliminarCategoria(@PathVariable Long id){
         categoriaService.eliminarCategoria(id);
-        return "La Categoria Se Elimino Correctamente";
     }
+
 }

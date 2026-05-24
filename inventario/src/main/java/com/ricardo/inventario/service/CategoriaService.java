@@ -36,6 +36,10 @@ public class CategoriaService {
     }
 
     public void eliminarCategoria(Long id){
+        Categoria categoria = categoriaRepository
+                .findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Categoría no encontrada"));
         categoriaRepository.deleteById(id);
     }
 }
