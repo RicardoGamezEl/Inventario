@@ -1,5 +1,6 @@
 const tablaProductos = document.getElementById("tablaProductos");
 const formulario = document.getElementById("productoForm");
+const modal = document.getElementById("modalEditar");
 
 let productoEditadoId = null;
 
@@ -43,6 +44,7 @@ formulario.addEventListener("submit", async (e) => {
 
     const name = document.getElementById("nombre").value;
     const price = document.getElementById("precio").value;
+    const stock = document.getElementById("cantidad").value;
     const categoriaId = document.getElementById("categoria").value;
 
     const url = productoEditadoId
@@ -64,7 +66,8 @@ formulario.addEventListener("submit", async (e) => {
         body: JSON.stringify({
             name,
             price,
-            categoriaId
+            stock: parseInt(stock),
+            categoriaId: parseInt(categoriaId)
         })
 
     });
@@ -91,33 +94,85 @@ async function editarProducto(id) {
 
     const producto = await response.json();
 
-    document.getElementById("nombre").value =
+    document.getElementById("editarNombre").value =
         producto.name;
 
-    document.getElementById("precio").value =
+    document.getElementById("editarPrecio").value =
         producto.price;
 
-    document.getElementById("categoria").value =
+    document.getElementById("editarCantidad").value =
+        producto.stock;
+
+    document.getElementById("editarCategoria").value =
         producto.categoriaId;
 
     productoEditadoId = id;
-}
 
+    modal.style.display = "flex";
+}
+function cerrarModal(){
+
+    modal.style.display = "none";
+    productoEditadoId = null;
+}
+async function guardarEdicion(){
+
+    const name =
+        document.getElementById("editarNombre").value;
+
+    const price =
+        document.getElementById("editarPrecio").value;
+
+    const stock =
+        document.getElementById("editarCantidad").value;
+
+    const categoriaId =
+        document.getElementById("editarCategoria").value;
+
+    await fetch(`${API_URL}/${productoEditadoId}`, {
+
+        method: "PUT",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body: JSON.stringify({
+            name,
+            price,
+            stock: parseInt(stock),
+            categoriaId: parseInt(categoriaId)
+        })
+    });
+
+    productoEditadoId = null;
+
+    cerrarModal();
+
+    obtenerProductos();
+}
 async function obtenerCategorias(){
 
     const response = await fetch(API_CATEGORIAS);
 
     const categorias = await response.json();
 
-    selectCategoria.innerHTML = "";
+    selectCategoria.innerHTML = '<option value="">Selecciona categoria</option>';
+    const selectEditarCategoria = document.getElementById("editarCategoria");
+    if (selectEditarCategoria) {
+        selectEditarCategoria.innerHTML = '<option value="">Selecciona categoria</option>';
+    }
 
     categorias.forEach(categoria => {
-
-        selectCategoria.innerHTML += `
+        const optionHTML = `
             <option value="${categoria.id}">
                 ${categoria.name}
             </option>
         `;
+        selectCategoria.innerHTML += optionHTML;
+        if (selectEditarCategoria) {
+            selectEditarCategoria.innerHTML += optionHTML;
+        }
     });
 }
 

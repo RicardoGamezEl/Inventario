@@ -38,8 +38,19 @@
     <tbody id="tablaProductos"></tbody>
 
 </table>
+        <div id="modalEditar" class="modal">
+        <div class="modal-content">
+            <span class="cerrar" onclick="cerrarModal()">&times;</span>
+            <h2>Editar Producto</h2>
+            <input type="text" id="editarNombre">
+            <input type="number" id="editarPrecio">
+            <input type="number" id="editarCantidad">
 
-<script src="app.js"></script>
+            <select id="editarCategoria"></select>
 
+            <button onclick="guardarEdicion()">Guardar</button>
+        </div>
+    <script src="app.js"></script>
+</div>
 </body>
 </html>

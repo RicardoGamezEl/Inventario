@@ -30,8 +30,18 @@ public class ProductoController {
     }
     @GetMapping("/{id}")
     @Operation(summary = "Obtener productos por ID")
-    public Producto obtenerProductoPorId(@PathVariable Long id){
-        return productoService.obtenerProductoPorId(id);
+    public ProductoResponseDTO obtenerProductoPorId(@PathVariable Long id){
+
+        Producto producto = productoService.obtenerProductoPorId(id);
+
+        return new ProductoResponseDTO(
+                producto.getId(),
+                producto.getName(),
+                producto.getPrice(),
+                producto.getStock(),
+                producto.getCategoria() != null ? producto.getCategoria().getName() : "Sin categoria",
+                producto.getCategoria() != null ? producto.getCategoria().getId() : null
+        );
     }
 
     @PostMapping
@@ -41,9 +51,10 @@ public class ProductoController {
     }
     @PutMapping("/{id}")
     @Operation(summary = "Actualizacion o Modificacion de productos")
-    public Producto actualizarProducto(@PathVariable Long id,@RequestBody Producto producto){
-        return productoService.actualizarProducto(id,producto);
+    public ProductoResponseDTO actualizarProducto(@PathVariable Long id, @Valid @RequestBody ProductoRequestDTO dto){
+        return productoService.actualizarProducto(id, dto);
     }
+
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar productos")

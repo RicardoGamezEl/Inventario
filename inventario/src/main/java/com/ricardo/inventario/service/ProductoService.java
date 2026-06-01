@@ -28,9 +28,13 @@ public class ProductoService {
                         producto.getId(),
                         producto.getName(),
                         producto.getPrice(),
+                        producto.getStock(),
                         producto.getCategoria() != null ?
                                 producto.getCategoria().getName():
-                                "Sin categoria"
+                                "Sin categoria",
+                        producto.getCategoria() != null ?
+                                producto.getCategoria().getId():
+                                null
                 ))
                 .toList();
     }
@@ -45,6 +49,7 @@ public class ProductoService {
 
         producto.setName(dto.getName());
         producto.setPrice(dto.getPrice());
+        producto.setStock(dto.getStock());
         producto.setCategoria(categoria);
 
         Producto productoGuardado =
@@ -53,7 +58,9 @@ public class ProductoService {
                 productoGuardado.getId(),
                 productoGuardado.getName(),
                 productoGuardado.getPrice(),
-                productoGuardado.getCategoria().getName()
+                productoGuardado.getStock(),
+                productoGuardado.getCategoria() != null ? productoGuardado.getCategoria().getName() : "Sin categoria",
+                productoGuardado.getCategoria() != null ? productoGuardado.getCategoria().getId() : null
         );
     }
     public void eliminarProducto(Long id) {
@@ -65,15 +72,29 @@ public class ProductoService {
         return  producto.orElse(null);
     }
 
-    public Producto actualizarProducto(Long id,Producto productoActualizado){
+    public ProductoResponseDTO actualizarProducto(Long id, ProductoRequestDTO dto){
         Optional<Producto> productoExistente = productoRepository.findById(id);
         if(productoExistente.isPresent()){
             Producto producto = productoExistente.get();
-            producto.setName(productoActualizado.getName());
-            producto.setPrice(productoActualizado.getPrice());
-            producto.setCategoria(productoActualizado.getCategoria());
-            return  productoRepository.save(producto);
+            producto.setName(dto.getName());
+            producto.setPrice(dto.getPrice());
+            producto.setStock(dto.getStock());
+
+            Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
+                    .orElseThrow(() -> new RuntimeException("Categoria No Encontrada"));
+            producto.setCategoria(categoria);
+
+            Producto productoGuardado = productoRepository.save(producto);
+            return new ProductoResponseDTO(
+                    productoGuardado.getId(),
+                    productoGuardado.getName(),
+                    productoGuardado.getPrice(),
+                    productoGuardado.getStock(),
+                    productoGuardado.getCategoria() != null ? productoGuardado.getCategoria().getName() : "Sin categoria",
+                    productoGuardado.getCategoria() != null ? productoGuardado.getCategoria().getId() : null
+            );
         }
         return null;
     }
+
 }
