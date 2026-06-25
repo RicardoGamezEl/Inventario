@@ -25,10 +25,20 @@ public class CategoriaController {
         return categoriaService.obtenerCategorias();
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Obtener Categoria Por Id")
+    public CategoriaReponseDTO obtenerCategoriaPorId(@PathVariable Long id){
+        return categoriaService.obtenerCategoriaPorId(id);
+    }
     @PostMapping
     @Operation(summary = "Crear Categorias")
     public CategoriaReponseDTO crearCategoria(@Valid @RequestBody CategoriaRequestDTO dto){
         return categoriaService.crearCategoria(dto);
+    }
+    @PutMapping("/{id}")
+    @Operation(summary = "Actualizar Categoria")
+    public CategoriaReponseDTO actualizarCategoria(@PathVariable Long id, @Valid @RequestBody CategoriaRequestDTO dto){
+        return categoriaService.actualizarCategoria(id,dto);
     }
 
     @DeleteMapping("/{id}")

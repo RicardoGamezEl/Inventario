@@ -24,6 +24,16 @@ public class CategoriaService {
                 ))
                 .toList();
     }
+    public CategoriaReponseDTO obtenerCategoriaPorId(Long id){
+        Categoria categoria = categoriaRepository
+                .findById(id)
+                .orElseThrow(() ->
+                    new RuntimeException("Categoria no encontrada"));
+        return new CategoriaReponseDTO(
+                categoria.getId(),
+                categoria.getName()
+        );
+    }
     public CategoriaReponseDTO crearCategoria(CategoriaRequestDTO dto){
         Categoria categoria = new Categoria();
 
@@ -32,6 +42,19 @@ public class CategoriaService {
         return new CategoriaReponseDTO(
                 categoriaGuardada.getId(),
                 categoriaGuardada.getName()
+        );
+    }
+    public CategoriaReponseDTO actualizarCategoria(Long id, CategoriaRequestDTO dto){
+        Categoria categoria = categoriaRepository
+                .findById(id)
+                .orElseThrow(()->
+                        new RuntimeException("Categoria No Encontrada"));
+        categoria.setName(dto.getName());
+
+        Categoria actualizada = categoriaRepository.save(categoria);
+        return new CategoriaReponseDTO(
+                actualizada.getId(),
+                actualizada.getName()
         );
     }
 
