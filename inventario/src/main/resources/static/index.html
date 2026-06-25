@@ -4,53 +4,67 @@
     <meta charset="UTF-8">
     <title>Inventario</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
+<header>
+    <button id="btnMenu">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <h1>Inventario</h1>
+</header>
+<div class="contenedor">
+    <aside class="sidebar">
+        <button class="btn" id = "btnAgregarProducto">Agregar Producto</button>
+        <button class="btn">Categorías</button>
+    </aside>
+    <main class="contenido">
 
-<h1>Inventario</h1>
+        <div class="modal" id ="agregarProducto">
+            <form id="productoForm">
+            <span class="cerrar" onclick="cerrarModal('agregarProducto')">&times;</span>
+            <h2>Datos Del Producto</h2>
 
-<form id="productoForm">
+            <input type="text" id="nombre" placeholder="Nombre" required>
+            <input type="number" id="precio" placeholder="Precio" required>
+            <input type="number" id="cantidad" placeholder="Cantidad" required>
+            <select id="categoria" required>
+                <option value="">Selecciona categoria</option>
+            </select>
 
-    <input type="text" id="nombre" placeholder="Nombre" required>
+            <button type="submit" class="btn">Agregar</button>
 
-    <input type="number" id="precio" placeholder="Precio" required>
-    <input type="number" id="cantidad" placeholder="Cantidad" required>
-    <select id="categoria" required>
-        <option value="">Selecciona categoria</option>
-    </select>
-
-    <button type="submit" class="btn">Agregar</button>
-
-</form>
-
-<table>
-
-    <thead>
-    <tr>
-        <th>Cantidad</th>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>Categoría</th>
-        <th>Acción</th>
-    </tr>
-    </thead>
-
-    <tbody id="tablaProductos"></tbody>
-
-</table>
-        <div id="modalEditar" class="modal">
-        <div class="modal-content">
-            <span class="cerrar" onclick="cerrarModal()">&times;</span>
-            <h2>Editar Producto</h2>
-            <input type="text" id="editarNombre">
-            <input type="number" id="editarPrecio">
-            <input type="number" id="editarCantidad">
-
-            <select id="editarCategoria"></select>
-
-            <button onclick="guardarEdicion()">Guardar</button>
+        </form>
         </div>
-    <script src="app.js"></script>
+        <table>
+
+            <thead>
+            <tr>
+                <th>Cantidad</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Acción</th>
+            </tr>
+            </thead>
+
+            <tbody id="tablaProductos"></tbody>
+
+        </table>
+        <div id="modalEditar" class="modal">
+            <div class="modal-content">
+                <span class="cerrar" onclick="cerrarModal('modalEditar')">&times;</span>
+                <h2>Editar Producto</h2>
+                <input type="text" id="editarNombre">
+                <input type="number" id="editarPrecio">
+                <input type="number" id="editarCantidad">
+                <select id="editarCategoria"></select>
+                <button onclick="guardarEdicion()">Guardar</button>
+            </div>
+        </div>
+    </main>
 </div>
+<script src="app.js"></script>
 </body>
 </html>
