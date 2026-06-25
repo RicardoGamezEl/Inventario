@@ -1,13 +1,26 @@
 const tablaProductos = document.getElementById("tablaProductos");
 const formulario = document.getElementById("productoForm");
-const modal = document.getElementById("modalEditar");
 
+const sidebar = document.querySelector(".sidebar");
+
+const modal = document.getElementById("modalEditar");
+const btnAgregarProducto = document.getElementById("btnAgregarProducto");
+const modalProductos = document.getElementById("agregarProducto");
 let productoEditadoId = null;
 
 const API_URL = "http://localhost:8008/productos";
 
 const selectCategoria = document.getElementById("categoria");
 const API_CATEGORIAS = "http://localhost:8008/categorias";
+
+btnAgregarProducto.addEventListener("click", () => {
+    modalProductos.style.display = "flex";
+    cerrarModal();
+});
+
+document.getElementById("btnMenu").addEventListener("click",()=>{
+    sidebar.classList.toggle("abierto");
+});
 
 async function obtenerProductos() {
 
@@ -110,10 +123,11 @@ async function editarProducto(id) {
 
     modal.style.display = "flex";
 }
-function cerrarModal(){
-
-    modal.style.display = "none";
-    productoEditadoId = null;
+function cerrarModal(idmodal){
+    document.getElementById(idmodal).style.display = "none";
+    if(idmodal == "modalEditar"){
+        productoEditadoId = null;
+    }
 }
 async function guardarEdicion(){
 
@@ -175,6 +189,7 @@ async function obtenerCategorias(){
         }
     });
 }
+
 
 obtenerProductos();
 obtenerCategorias();

@@ -9,14 +9,68 @@ body{
     background: #0f172a;
     color: #f8fafc;
     min-height: 100vh;
-    padding: 40px 20px;
+}
+header{
+    background-color: #1e293b;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+header h1{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-size: 2rem;
 }
 
+#btnMenu{
+    margin-left: 15px;
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+#btnMenu:hover{
+    color: #6c99e2;
+}
+
+.contenedor{
+    display: flex;
+    min-height: calc(100vh - 70px);
+}
+.sidebar{
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+    transition: .3s;
+}
+.sidebar.abierto{
+    width: 220px;
+    background: #1e293b;
+    padding: 20px; 
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.contenido{
+    flex: 1;
+    padding: 30px;
+}
+main{
+    padding: 40px 10px;
+}
 /* TITULO */
 h1{
-    font-size: 3rem;
+    font-size: 2rem;
+    margin: 0;
     font-weight: 700;
-    margin-bottom: 35px;
     color: #ffffff;
     letter-spacing: 1px;
     text-align: center;
