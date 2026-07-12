@@ -1,36 +1,83 @@
-<h1>Categorías</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorías</title>
 
-<form id="categoriaForm">
-    <input
-        type="text"
-        id="nombreCategoria"
-        placeholder="Nombre de la categoría"
-        required>
-
-    <button type="submit">
-        Guardar
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+<header>
+    <button id="btnMenu">
+        <i class="fa-solid fa-bars"></i>
     </button>
-</form>
+    <h1>Inventario</h1>
+</header>
 
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
+<div class="contenedor">
+    <aside class="sidebar">
+        <button class="btn"><a href="index.html">Productos</a></button>
+        <button class="btn" ><a href="categorias.html">Categorías</a></button>
+    </aside>
+    <div class="contenido">
+        <main>
+            <div class="modal" id="nuevaCategoria">
+                <form id="categoriaForm">
+                    <span class="cerrar" onclick="cerrarModalCategoria('nuevaCategoria')">&times;</span>
+                    <h2>Nueva Categoria</h2>
+                <input
+                        type="text"
+                        id="nombreCategoria"
+                        placeholder="Nombre de la categoría"
+                        required>
 
-    <tbody id="tablaCategorias">
-
-    </tbody>
-</table>
-<div id = "modalCategoria" class = "modal">
-    <div class = "modal-content">
-        <span>
-            <h2>Editar Categoria</h2>
-            <input type="text" id="editarCategoria">
-            <button onclick="guardarEdicionCategoria">Guardar</button>    
-        </span>
+                <button type="submit" class="btn">
+                    Guardar
+                </button>
+            </form>
+            </div>
+            <div class="toolbar">
+                <h2>Categorías</h2>
+                <button class="btn" id="btnNuevaCategoria">Nueva Categoria</button>
+            </div>
+            <div class="tabla-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Acción</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tablaCategorias">
+                    </tbody>
+                </table>
+            </div>
+        </main>
     </div>
 </div>
+
+<div id="modalCategoria" class="modal">
+    <div class="modal-content">
+        <span
+                class="cerrar"
+                onclick="cerrarModalCategoria('modalCategoria')">
+            &times;
+        </span>
+        <h2>Editar Categoría</h2>
+        <input
+                type="text"
+                id="editarNombreCategoria"
+                placeholder="Nombre">
+        <button
+                onclick="guardarEdicionCategoria()">
+            Guardar
+        </button>
+    </div>
+</div>
+<script defer src="categorias.js"></script>
+</body>
+</html>

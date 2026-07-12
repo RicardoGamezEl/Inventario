@@ -16,8 +16,8 @@
 </header>
 <div class="contenedor">
     <aside class="sidebar">
-        <button class="btn" id = "btnAgregarProducto">Agregar Producto</button>
-        <button class="btn">Categorías</button>
+        <button class="btn"><a href="index.html">Productos</a></button>
+        <button class="btn" ><a href="categorias.html">Categorías</a></button>
     </aside>
     <main class="contenido">
 
@@ -37,7 +37,12 @@
 
         </form>
         </div>
-        <table>
+        <div class="tabla-container">
+            <div class="toolbar">
+                <h2>Productos</h2>
+                <button class="btn" id = "btnAgregarProducto">Agregar Producto</button>
+            </div>
+            <table>
 
             <thead>
             <tr>
@@ -52,6 +57,7 @@
             <tbody id="tablaProductos"></tbody>
 
         </table>
+        </div>
         <div id="modalEditar" class="modal">
             <div class="modal-content">
                 <span class="cerrar" onclick="cerrarModal('modalEditar')">&times;</span>
