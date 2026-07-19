@@ -10,7 +10,6 @@ let categoriaEditadaId = null;
 
 btnNvaCategoria.addEventListener("click",()=>{
     modalCategoria.style.display = "flex";
-    cerrarModal();z
 })
 async function obtenerCategorias() {
     const response = await fetch(API_URL);
@@ -107,13 +106,14 @@ async function guardarEdicionCategoria() {
 
 }
 
-function cerrarModalCategoria() {
-
-    document.getElementById("modalCategoria").style.display = "none";
-    if(idmodal == "modalEditar"){
-        categoriaEditadaId = null;
+function cerrarModalCategoria(idmodal) {
+    if (idmodal) {
+        document.getElementById(idmodal).style.display = "none";
+    } else {
+        document.getElementById("modalCategoria").style.display = "none";
+        document.getElementById("nuevaCategoria").style.display = "none";
     }
-
+    categoriaEditadaId = null;
 }
 
 async function eliminarCategoria(id) {

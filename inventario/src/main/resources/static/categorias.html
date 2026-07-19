@@ -25,19 +25,20 @@
     <div class="contenido">
         <main>
             <div class="modal" id="nuevaCategoria">
-                <form id="categoriaForm">
+                <div class="modal-content">
                     <span class="cerrar" onclick="cerrarModalCategoria('nuevaCategoria')">&times;</span>
-                    <h2>Nueva Categoria</h2>
-                <input
-                        type="text"
-                        id="nombreCategoria"
-                        placeholder="Nombre de la categoría"
-                        required>
-
-                <button type="submit" class="btn">
-                    Guardar
-                </button>
-            </form>
+                    <form id="categoriaForm">
+                        <h2>Nueva Categoria</h2>
+                        <input
+                                type="text"
+                                id="nombreCategoria"
+                                placeholder="Nombre de la categoría"
+                                required>
+                        <button type="submit" class="btn">
+                            Guardar
+                        </button>
+                    </form>
+                </div>
             </div>
             <div class="toolbar">
                 <h2>Categorías</h2>
@@ -60,7 +61,7 @@
     </div>
 </div>
 
-<div id="modalCategoria" class="modal">
+<div class="modal" id="modalCategoria">
     <div class="modal-content">
         <span
                 class="cerrar"
