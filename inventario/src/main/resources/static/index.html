@@ -27,7 +27,7 @@
             <h2>Datos Del Producto</h2>
 
             <input type="text" id="nombre" placeholder="Nombre" required>
-            <input type="number" id="precio" placeholder="Precio" required>
+            <input type="number" id="precio" placeholder="Precio" step="0.01" min="0" required>
             <input type="number" id="cantidad" placeholder="Cantidad" required>
             <select id="categoria" required>
                 <option value="">Selecciona categoria</option>
@@ -71,6 +71,8 @@
         </div>
     </main>
 </div>
-<script src="app.js"></script>
+<div id="toastContainer"></div>
+<script  src="utils.js"></script>
+<script  src="app.js"></script>
 </body>
 </html>

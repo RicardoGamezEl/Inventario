@@ -2,7 +2,6 @@ const tablaProductos = document.getElementById("tablaProductos");
 const formulario = document.getElementById("productoForm");
 
 const sidebar = document.querySelector(".sidebar");
-
 const modal = document.getElementById("modalEditar");
 const btnAgregarProducto = document.getElementById("btnAgregarProducto");
 const modalProductos = document.getElementById("agregarProducto");
@@ -56,9 +55,9 @@ formulario.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const name = document.getElementById("nombre").value;
-    const price = document.getElementById("precio").value;
-    const stock = document.getElementById("cantidad").value;
-    const categoriaId = document.getElementById("categoria").value;
+    const price = parseFloat(document.getElementById("precio").value);
+    const stock = parseInt(document.getElementById("cantidad").value);
+    const categoriaId = parseInt(document.getElementById("categoria").value);
 
     const url = productoEditadoId
         ? `${API_URL}/${productoEditadoId}`
@@ -68,7 +67,7 @@ formulario.addEventListener("submit", async (e) => {
         ? "PUT"
         : "POST";
 
-    await fetch(url, {
+    const response = await fetch(url, {
 
         method: method,
 
@@ -79,92 +78,89 @@ formulario.addEventListener("submit", async (e) => {
         body: JSON.stringify({
             name,
             price,
-            stock: parseInt(stock),
-            categoriaId: parseInt(categoriaId)
+            stock,
+            categoriaId
         })
 
     });
+    if(!response.ok){
+        mostrarToast("No se pudo guardar el producto","error");
+        return;
+    }
 
     formulario.reset();
-
     productoEditadoId = null;
-
-    obtenerProductos();
+    await obtenerProductos();
+    mostrarToast("Producto Guardado Correctamente","success");
 });
 
 async function eliminarProducto(id) {
 
+    const comfirm = confirm(
+        "¿Desea Eliminar Este Producto?"
+    );
     await fetch(`${API_URL}/${id}`, {
         method: "DELETE"
     });
-
-    obtenerProductos();
+    if(!response.ok){
+        mostrarToast("No se pudo eliminar el producto","error");
+    }
+    await obtenerProductos();
+    mostrarToast("Producto eliminado correctamente", "success");
 }
 
 async function editarProducto(id) {
 
     const response = await fetch(`${API_URL}/${id}`);
-
     const producto = await response.json();
-
     document.getElementById("editarNombre").value =
         producto.name;
-
     document.getElementById("editarPrecio").value =
         producto.price;
-
     document.getElementById("editarCantidad").value =
         producto.stock;
-
     document.getElementById("editarCategoria").value =
         producto.categoriaId;
-
     productoEditadoId = id;
-
     modal.style.display = "flex";
 }
-function cerrarModal(idmodal){
-    document.getElementById(idmodal).style.display = "none";
-    if(idmodal == "modalEditar"){
-        productoEditadoId = null;
-    }
-}
-async function guardarEdicion(){
+async function guardarEdicion() {
 
-    const name =
+    const name = 
         document.getElementById("editarNombre").value;
 
-    const price =
-        document.getElementById("editarPrecio").value;
+    const price = parseFloat(
+        document.getElementById("editarPrecio").value);
+    const stock = parseInt(
+        document.getElementById("editarCantidad").value);
 
-    const stock =
-        document.getElementById("editarCantidad").value;
-
-    const categoriaId =
-        document.getElementById("editarCategoria").value;
-
-    await fetch(`${API_URL}/${productoEditadoId}`, {
-
+    const categoriaId = parseInt(
+        document.getElementById("editarCategoria").value);
+    const response = await fetch(`${API_URL}/${productoEditadoId}`,
+    {   
         method: "PUT",
-
-        headers:{
+        headers: {
             "Content-Type":"application/json"
         },
-
         body: JSON.stringify({
             name,
             price,
-            stock: parseInt(stock),
-            categoriaId: parseInt(categoriaId)
+            stock,
+            categoriaId
         })
+
     });
+    if(!response.ok){
+        mostrarToast("No se pudo actualizar el producto", "error");
+        return;
+    }
 
+    cerrarModal("modalEditar")
+    await obtenerProductos();
     productoEditadoId = null;
-
-    cerrarModal();
-
-    obtenerProductos();
+    mostrarToast("Producto actualizado correctamente", "success");
 }
+
 async function obtenerCategorias(){
 
     const response = await fetch(API_CATEGORIAS);
@@ -190,6 +186,6 @@ async function obtenerCategorias(){
     });
 }
 
-
-obtenerProductos();
-obtenerCategorias();
+ mostrarToast("Productos", "success");
+ obtenerProductos();
+ obtenerCategorias();

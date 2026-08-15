@@ -18,7 +18,7 @@ public class Producto {
     private String name;
 
     @NotNull(message = "EL Precio Es Obligatorio")
-    @Positive(message = "El Precion Debe Ser Mayoy A 0")
+    @Positive(message = "El Precion Debe Ser Mayor A 0")
     private  Double price;
 
     private int stock;
