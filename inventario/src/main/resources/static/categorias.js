@@ -42,9 +42,10 @@ formulario.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    const nombre = document.getElementById("nombreCategoria").value;
+    const nombre = 
+        document.getElementById("nombreCategoria").value;
 
-    await fetch(API_URL, {
+    const response = await fetch(API_URL, {
 
         method: "POST",
 
@@ -57,10 +58,14 @@ formulario.addEventListener("submit", async (e) => {
         })
 
     });
+    if(!response.ok){
+        mostrarToast("No se pudo crear la categoria", "error");
+        return;
+    }
 
     formulario.reset();
-
-    obtenerCategorias();
+    await obtenerCategorias();
+    mostrarToast("Categoria creada correctamente", "success");
 
 });
 
@@ -84,7 +89,7 @@ async function guardarEdicionCategoria() {
     const nombre =
         document.getElementById("editarNombreCategoria").value;
 
-    await fetch(`${API_URL}/${categoriaEditadaId}`, {
+    const response = await fetch(`${API_URL}/${categoriaEditadaId}`, {
 
         method: "PUT",
 
@@ -97,51 +102,45 @@ async function guardarEdicionCategoria() {
         })
 
     });
-
-    categoriaEditadaId = null;
-
-    cerrarModalCategoria();
-
-    obtenerCategorias();
-
-}
-
-function cerrarModalCategoria(idmodal) {
-    if (idmodal) {
-        document.getElementById(idmodal).style.display = "none";
-    } else {
-        document.getElementById("modalCategoria").style.display = "none";
-        document.getElementById("nuevaCategoria").style.display = "none";
+    if(!response.ok){
+        mostrarToast("No se pudo actualizar la categoria", "error");
+        return;
     }
+
+    cerrarModal("modalCategoria");
+    await obtenerCategorias();
     categoriaEditadaId = null;
+    mostrarToast("Categoria actualizada correctamente","success");
+
 }
 
 async function eliminarCategoria(id) {
 
     const confirmar = confirm("¿Deseas eliminar esta categoría?");
 
-    if (!confirmar) return;
-
-    try {
-
-        const response = await fetch(`${API_URL}/${id}`, {
-
-            method: "DELETE"
-
-        });
-
-        if (!response.ok) {
-            throw new Error();
-        }
-
-        obtenerCategorias();
-
-    } catch (error) {
-
-        alert("No puedes eliminar una categoría que tiene productos asociados.");
-
+    if (!confirmar){
+        return;
     }
 
+    const response = await fetch(`${API_URL}/${id}`, {
+
+        method: "DELETE"
+    });
+
+    if (!response.ok) {
+
+        mostrarToast(
+            "Esta categoria tiene productos asociados no se puede eliminar",
+            "error");
+        return;
+    }
+
+    await obtenerCategorias();
+    mostrarToast(
+    "Categoría eliminada correctamente",
+    "success"
+    )
 }
 
+mostrarToast("Caregorias","success");
 obtenerCategorias();

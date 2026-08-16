@@ -130,7 +130,7 @@ async function guardarEdicion() {
         document.getElementById("editarNombre").value;
 
     const price = parseFloat(
-        document.getElementById("editarPrecio").value);
+        document.getElementById("editarPrecio").value)  ;
     const stock = parseInt(
         document.getElementById("editarCantidad").value);
 
