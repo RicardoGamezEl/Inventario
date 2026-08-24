@@ -26,14 +26,13 @@
         <main>
             <div class="modal" id="nuevaCategoria">
                 <div class="modal-content">
-                    <span class="cerrar" onclick="cerrarModalCategoria('nuevaCategoria')">&times;</span>
+                    <span class="cerrar" onclick="cerrarModal('nuevaCategoria')">&times;</span>
                     <form id="categoriaForm">
                         <h2>Nueva Categoria</h2>
                         <input
                                 type="text"
                                 id="nombreCategoria"
-                                placeholder="Nombre de la categoría"
-                                required>
+                                placeholder="Nombre de la categoría">
                         <button type="submit" class="btn">
                             Guardar
                         </button>
@@ -63,11 +62,7 @@
 
 <div class="modal" id="modalCategoria">
     <div class="modal-content">
-        <span
-                class="cerrar"
-                onclick="cerrarModal('modalCategoria')">
-            &times;
-        </span>
+        <span class="cerrar" onclick="cerrarModal('modalCategoria')">&times;</span>
         <h2>Editar Categoría</h2>
         <input
                 type="text"

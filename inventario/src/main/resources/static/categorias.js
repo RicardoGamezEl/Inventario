@@ -89,7 +89,8 @@ async function guardarEdicionCategoria() {
     const nombre =
         document.getElementById("editarNombreCategoria").value;
 
-    const response = await fetch(`${API_URL}/${categoriaEditadaId}`, {
+    try{
+        const response = await fetch(`${API_URL}/${categoriaEditadaId}`, {
 
         method: "PUT",
 
@@ -103,15 +104,22 @@ async function guardarEdicionCategoria() {
 
     });
     if(!response.ok){
-        mostrarToast("No se pudo actualizar la categoria", "error");
+        const error = await response.json();
+        const mensaje = Object.values(error).join(" | ");
+        mostrarToast(mensaje,"error");
         return;
     }
-
+        mostrarToast(
+            "Categoría actualizada correctamente",
+            "success"
+        );
     cerrarModal("modalCategoria");
     await obtenerCategorias();
     categoriaEditadaId = null;
-    mostrarToast("Categoria actualizada correctamente","success");
-
+}catch(error){
+    console.error("error", error);
+    mostrarToast("No se pudo conectar al servidor", "error");
+}
 }
 
 async function eliminarCategoria(id) {
@@ -122,24 +130,24 @@ async function eliminarCategoria(id) {
         return;
     }
 
-    const response = await fetch(`${API_URL}/${id}`, {
-
-        method: "DELETE"
-    });
-
-    if (!response.ok) {
-
-        mostrarToast(
-            "Esta categoria tiene productos asociados no se puede eliminar",
-            "error");
-        return;
+    try{
+        const respose = await fetch(
+            `${API_URL}/${id}`,
+            {
+                method:"DELETE"
+            }
+        );
+        if(!respose.ok){
+            mostrarToast("No puedes eliminar una categoria que tiene productos asociados","error");
+            return;
+        }
+        await obtenerCategorias();
+        mostrarToast("Categoria eliminada correctamente", "success");
+    }catch(error){
+        console.error("Error", error);
+        mostrarToast("No se pudo conectar al servidor", "error");
     }
 
-    await obtenerCategorias();
-    mostrarToast(
-    "Categoría eliminada correctamente",
-    "success"
-    )
 }
 
 mostrarToast("Caregorias","success");

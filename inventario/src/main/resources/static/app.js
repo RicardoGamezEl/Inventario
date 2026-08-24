@@ -67,7 +67,8 @@ formulario.addEventListener("submit", async (e) => {
         ? "PUT"
         : "POST";
 
-    const response = await fetch(url, {
+    try{
+        const response = await fetch(url, {
 
         method: method,
 
@@ -84,14 +85,23 @@ formulario.addEventListener("submit", async (e) => {
 
     });
     if(!response.ok){
-        mostrarToast("No se pudo guardar el producto","error");
+        const errores = await response.json();
+        const mensaje = Object.values(errores).join(" | ");
+        mostrarToast(mensaje,"error");
         return;
     }
+
+    mostrarToast(productoEditadoId ? "Producto actualizado correctamente" : "Producto agregado correctamente", "success");
 
     formulario.reset();
     productoEditadoId = null;
     await obtenerProductos();
-    mostrarToast("Producto Guardado Correctamente","success");
+
+}catch(error){
+    console.error("Error", error);
+    mostrarToast("No se pudo conectar con el servidor","error");
+}
+
 });
 
 async function eliminarProducto(id) {
