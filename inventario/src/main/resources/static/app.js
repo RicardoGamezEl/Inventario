@@ -1,10 +1,13 @@
 const tablaProductos = document.getElementById("tablaProductos");
 const formulario = document.getElementById("productoForm");
+const buscarProducto = document.getElementById("buscarProducto");
 
 const sidebar = document.querySelector(".sidebar");
 const modal = document.getElementById("modalEditar");
 const btnAgregarProducto = document.getElementById("btnAgregarProducto");
 const modalProductos = document.getElementById("agregarProducto");
+
+let productos = [];
 let productoEditadoId = null;
 
 const API_URL = "http://localhost:8008/productos";
@@ -20,16 +23,16 @@ btnAgregarProducto.addEventListener("click", () => {
 document.getElementById("btnMenu").addEventListener("click",()=>{
     sidebar.classList.toggle("abierto");
 });
-
 async function obtenerProductos() {
 
     const response = await fetch(API_URL);
-    const productos = await response.json();
+    productos = await response.json();
+    mostrarProductos(productos);
+}
 
+function mostrarProductos(lista){
     tablaProductos.innerHTML = "";
-
-    productos.forEach(producto => {
-
+    lista.forEach(producto => {
         tablaProductos.innerHTML += `
             <tr>
                 <td>${producto.stock}</td>
@@ -40,7 +43,6 @@ async function obtenerProductos() {
                     <button onclick="editarProducto(${producto.id})">
                         Editar
                     </button>
-
                     <button onclick="eliminarProducto(${producto.id})">
                         Eliminar
                     </button>
@@ -49,6 +51,15 @@ async function obtenerProductos() {
         `;
     });
 }
+buscarProducto.addEventListener("input", () => {
+    const texto = buscarProducto.value.toLowerCase();
+
+    const resultados = productos.filter(producto =>
+        producto.name.toLowerCase().includes(texto)
+    );
+
+    mostrarProductos(resultados);
+});
 
 formulario.addEventListener("submit", async (e) => {
 
@@ -106,17 +117,42 @@ formulario.addEventListener("submit", async (e) => {
 
 async function eliminarProducto(id) {
 
-    const comfirm = confirm(
-        "¿Desea Eliminar Este Producto?"
+    const confirmar = confirm(
+        "¿Desea eliminar este producto?"
     );
-    await fetch(`${API_URL}/${id}`, {
-        method: "DELETE"
-    });
-    if(!response.ok){
-        mostrarToast("No se pudo eliminar el producto","error");
+
+    if (!confirmar) return;
+
+    try {
+
+        const response = await fetch(`${API_URL}/${id}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) {
+            mostrarToast(
+                "No se pudo eliminar el producto",
+                "error"
+            );
+            return;
+        }
+
+        await obtenerProductos();
+
+        mostrarToast(
+            "Producto eliminado correctamente",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error("Error:", error);
+
+        mostrarToast(
+            "No se pudo conectar con el servidor",
+            "error"
+        );
     }
-    await obtenerProductos();
-    mostrarToast("Producto eliminado correctamente", "success");
 }
 
 async function editarProducto(id) {

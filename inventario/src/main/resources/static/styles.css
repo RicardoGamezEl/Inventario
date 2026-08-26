@@ -160,6 +160,10 @@ select:focus{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 15px;
+}
+#buscarProducto{
+    width: 250px;
 }
 .toolbar h2{
     font-size: 2rem;
