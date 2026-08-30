@@ -66,6 +66,7 @@ header h1{
 .contenido{
     flex: 1;
     padding: 30px;
+    min-width: 0;
 }
 main{
     padding: 40px 10px;
@@ -176,6 +177,14 @@ select:focus{
 }
 #btnAgregarProducto{
     margin: 0;
+}
+#filtroCategoria{
+    width: 200px;
+}
+.acciones{
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 /* TABLA */

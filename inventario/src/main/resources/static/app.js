@@ -6,6 +6,7 @@ const sidebar = document.querySelector(".sidebar");
 const modal = document.getElementById("modalEditar");
 const btnAgregarProducto = document.getElementById("btnAgregarProducto");
 const modalProductos = document.getElementById("agregarProducto");
+const filtroCategoria = document.getElementById("filtroCategoria");
 
 let productos = [];
 let productoEditadoId = null;
@@ -51,15 +52,30 @@ function mostrarProductos(lista){
         `;
     });
 }
-buscarProducto.addEventListener("input", () => {
+
+function filtrarProductos(){
     const texto = buscarProducto.value.toLowerCase();
+    const categoriaId = filtroCategoria.value;
 
-    const resultados = productos.filter(producto =>
-        producto.name.toLowerCase().includes(texto)
-    );
+    const resultados = productos.filter(producto =>{
+        const coincideNombre = producto.name.toLowerCase().includes(texto);
+        
+        const coincideCategoria = categoriaId === "" || producto.categoriaId == categoriaId;
 
+        return coincideNombre && coincideCategoria;
+    });
     mostrarProductos(resultados);
-});
+}
+
+buscarProducto.addEventListener(
+    "input",
+    filtrarProductos
+);
+
+filtroCategoria.addEventListener(
+    "change",
+    filtrarProductos
+);
 
 formulario.addEventListener("submit", async (e) => {
 
@@ -213,11 +229,15 @@ async function obtenerCategorias(){
 
     const categorias = await response.json();
 
-    selectCategoria.innerHTML = '<option value="">Selecciona categoria</option>';
+    filtroCategoria.innerHTML = '<option value = "">Todas las categorías></option>';
+
     const selectEditarCategoria = document.getElementById("editarCategoria");
+    
     if (selectEditarCategoria) {
         selectEditarCategoria.innerHTML = '<option value="">Selecciona categoria</option>';
     }
+
+    selectCategoria.innerHTML = '<option value="">Selecciona categoria</option>';
 
     categorias.forEach(categoria => {
         const optionHTML = `
@@ -226,9 +246,12 @@ async function obtenerCategorias(){
             </option>
         `;
         selectCategoria.innerHTML += optionHTML;
+
         if (selectEditarCategoria) {
             selectEditarCategoria.innerHTML += optionHTML;
         }
+        
+        filtroCategoria.innerHTML += optionHTML;
     });
 }
 
