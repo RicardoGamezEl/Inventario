@@ -33,6 +33,18 @@ async function obtenerProductos() {
 
 function mostrarProductos(lista){
     tablaProductos.innerHTML = "";
+
+    if(lista.length === 0){
+        tablaProductos.innerHTML = `
+            <tr>
+                <td colspan="5" class="sin-productos">
+                    No se encontraron productos
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
     lista.forEach(producto => {
         tablaProductos.innerHTML += `
             <tr>
