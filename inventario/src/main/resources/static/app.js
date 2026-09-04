@@ -9,12 +9,24 @@ const modalProductos = document.getElementById("agregarProducto");
 const filtroCategoria = document.getElementById("filtroCategoria");
 
 let productos = [];
+let categorias = [];
 let productoEditadoId = null;
 
 const API_URL = "http://localhost:8008/productos";
 
 const selectCategoria = document.getElementById("categoria");
 const API_CATEGORIAS = "http://localhost:8008/categorias";
+
+function actualizarDashboard(){
+    const totalProductos = productos.length;
+    const stockTotal = productos.reduce((total, producto) => total + producto.stock, 0);
+    const valorInventario = productos.reduce((total, producto) => total + (producto.price * producto.stock), 0);
+
+    document.getElementById("totalProductos").textContent = totalProductos;
+    document.getElementById("stockTotal").textContent = stockTotal;
+    document.getElementById("totalCategorias").textContent = categorias.length;
+    document.getElementById("valorInventario").textContent = `$${Intl.NumberFormat("es-MX").format(valorInventario.toFixed(2))}`;
+}
 
 btnAgregarProducto.addEventListener("click", () => {
     modalProductos.style.display = "flex";
@@ -29,6 +41,7 @@ async function obtenerProductos() {
     const response = await fetch(API_URL);
     productos = await response.json();
     mostrarProductos(productos);
+    actualizarDashboard();
 }
 
 function mostrarProductos(lista){
@@ -50,7 +63,7 @@ function mostrarProductos(lista){
             <tr>
                 <td>${producto.stock}</td>
                 <td>${producto.name}</td>
-                <td>${producto.price}</td>
+                <td>${Intl.NumberFormat("es-MX").format(producto.price)}</td>
                 <td>${producto.categoria}</td>
                 <td>
                     <button onclick="editarProducto(${producto.id})">
@@ -192,7 +205,7 @@ async function editarProducto(id) {
     document.getElementById("editarPrecio").value =
         producto.price;
     document.getElementById("editarCantidad").value =
-        producto.stock;
+        Intl.NumberFormat("es-MX").format(producto.stock);
     document.getElementById("editarCategoria").value =
         producto.categoriaId;
     productoEditadoId = id;
@@ -206,8 +219,8 @@ async function guardarEdicion() {
     const price = parseFloat(
         document.getElementById("editarPrecio").value)  ;
     const stock = parseInt(
-        document.getElementById("editarCantidad").value);
-
+        Intl.NumberFormat("es-MX").format(document.getElementById("editarCantidad").value)
+    );
     const categoriaId = parseInt(
         document.getElementById("editarCategoria").value);
     const response = await fetch(`${API_URL}/${productoEditadoId}`,
@@ -239,9 +252,9 @@ async function obtenerCategorias(){
 
     const response = await fetch(API_CATEGORIAS);
 
-    const categorias = await response.json();
+    categorias = await response.json();
 
-    filtroCategoria.innerHTML = '<option value = "">Todas las categorías></option>';
+    filtroCategoria.innerHTML = '<option value = "">Todas las categorías</option>';
 
     const selectEditarCategoria = document.getElementById("editarCategoria");
     
@@ -265,6 +278,8 @@ async function obtenerCategorias(){
         
         filtroCategoria.innerHTML += optionHTML;
     });
+
+    actualizarDashboard();
 }
 
  mostrarToast("Productos", "success");
