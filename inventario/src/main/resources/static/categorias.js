@@ -66,6 +66,7 @@ formulario.addEventListener("submit", async (e) => {
     formulario.reset();
     await obtenerCategorias();
     mostrarToast("Categoria creada correctamente", "success");
+    cerrarModal("nuevaCategoria");
 
 });
 
@@ -150,5 +151,4 @@ async function eliminarCategoria(id) {
 
 }
 
-mostrarToast("Caregorias","success");
 obtenerCategorias();

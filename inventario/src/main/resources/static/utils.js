@@ -16,3 +16,11 @@ function cerrarModal(idModal){
         modal.style.display = "none";
     }
 }
+function formatearMoneda(valor) {
+
+    return new Intl.NumberFormat("es-MX", {
+        style: "currency",
+        currency: "MXN"
+    }).format(valor);
+
+}
