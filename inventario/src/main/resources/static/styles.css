@@ -303,22 +303,157 @@ td button:last-child:hover{
 @media(max-width: 768px){
 
     body{
-        padding: 20px;
+        padding: 0;
     }
 
-    h1{
-        font-size: 2.2rem;
+    header{
+        width: 100%;
+    }
+
+    header h1{
+        font-size: 1.5rem;
+    }
+
+    /* Sidebar como overlay en móvil */
+    .sidebar.abierto{
+        position: fixed;
+        top: 70px;
+        left: 0;
+        bottom: 0;
+        z-index: 900;
+        width: 220px;
+    }
+
+    .contenido{
+        padding: 15px;
+    }
+
+    /* Dashboard: 2 columnas en tablet */
+    .dashboard{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .card-dashboard{
+        padding: 15px;
+    }
+
+    .card-dashboard p{
+        font-size: 20px;
+    }
+
+    /* Toolbar se apila verticalmente */
+    .toolbar{
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .toolbar h2{
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .acciones{
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #buscarProducto,
+    #filtroCategoria{
+        width: 100%;
+    }
+
+    #btnAgregarProducto{
+        width: 100%;
+    }
+
+    /* Tabla sin scroll, se adapta al ancho */
+    .tabla-container{
+        overflow-x: visible;
     }
 
     table{
-        font-size: 14px;
+        font-size: 13px;
+        min-width: 0;
+        table-layout: fixed;
+        width: 100%;
+        word-break: break-word;
     }
 
     th,
     td{
-        padding: 12px;
+        padding: 10px 6px;
+        font-size: 12px;
     }
 
+    td button{
+        padding: 6px 8px;
+        font-size: 11px;
+        margin: 2px 1px;
+        display: inline-block;
+        white-space: nowrap;
+    }
+
+    /* Stock bajo */
+    .stock-bajo-container{
+        padding: 15px;
+    }
+
+    .producto-stock-bajo{
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Modal */
+    .modal-content{
+        width: 95%;
+        padding: 20px;
+    }
+
+    /* Toast */
+    #toastContainer{
+        left: 10px;
+        right: 10px;
+    }
+
+    .toast{
+        min-width: auto;
+        width: 100%;
+    }
+}
+
+/* Extra small screens */
+@media(max-width: 480px){
+
+    header h1{
+        font-size: 1.2rem;
+    }
+
+    .dashboard{
+        grid-template-columns: 1fr;
+    }
+
+    .toolbar h2{
+        font-size: 1.3rem;
+    }
+
+    .card-dashboard h3{
+        font-size: 14px;
+    }
+
+    .card-dashboard p{
+        font-size: 18px;
+    }
+
+    form{
+        padding: 20px;
+    }
+
+    h1{
+        font-size: 1.5rem;
+    }
 }
 
 /* MODAL */

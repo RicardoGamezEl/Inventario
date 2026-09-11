@@ -21,14 +21,12 @@ async function obtenerCategorias() {
                 <td>${categoria.id}</td>
                 <td>${categoria.name}</td>
                 <td>
-                    <div class="acciones">
-                        <button onclick="editarCategoria(${categoria.id})">
-                            Editar
-                        </button>
-                        <button onclick="eliminarCategoria(${categoria.id})">
-                            Eliminar
-                        </button>
-                    </div>
+                    <button onclick="editarCategoria(${categoria.id})">
+                        Editar
+                    </button>
+                    <button onclick="eliminarCategoria(${categoria.id})">
+                        Eliminar
+                    </button>
                 </td>
             </tr>
         `;
