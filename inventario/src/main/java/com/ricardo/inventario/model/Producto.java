@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Positive;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 
-import java.util.Optional;
 @Entity
 @Table(name = "productos")
 public class Producto {

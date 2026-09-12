@@ -267,7 +267,7 @@ td button{
     font-size: 14px;
     font-weight: 500;
     transition: 0.2s ease;
-    margin: 0 4px;
+    margin: 4px 2px;
 }
 
 td button:first-child{

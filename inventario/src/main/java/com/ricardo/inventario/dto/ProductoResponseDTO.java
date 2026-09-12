@@ -1,6 +1,5 @@
 package com.ricardo.inventario.dto;
 
-import com.ricardo.inventario.model.Producto;
 
 public class ProductoResponseDTO {
     private Long id;
