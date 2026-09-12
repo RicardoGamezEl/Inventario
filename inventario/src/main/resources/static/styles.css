@@ -103,7 +103,6 @@ header h1{
 main{
     padding: 40px 10px;
 }
-/* TITULO */
 h1{
     font-size: 2rem;
     margin: 0;
@@ -113,7 +112,6 @@ h1{
     text-align: center;
 }
 
-/* FORMULARIO */
 form{
     width: 100%;
     max-width: 420px;
@@ -130,7 +128,6 @@ form{
     gap: 16px;
 }
 
-/* INPUTS */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button{
     -webkit-appearance: none;
@@ -162,7 +159,6 @@ select:focus{
     box-shadow: 0 0 0 4px rgba(59,130,246,0.15);
 }
 
-/* BOTON */
 .btn{
     border: none;
     padding: 14px;
@@ -219,7 +215,6 @@ select:focus{
     gap: 15px;
 }
 
-/* TABLA */
 table{
     width: 100%;
     max-width: 1100px;
@@ -233,7 +228,6 @@ table{
     box-shadow: 0 10px 30px rgba(0,0,0,0.25);
 }
 
-/* HEADER */
 thead{
     background: rgba(255,255,255,0.06);
 }
@@ -246,7 +240,6 @@ th{
     letter-spacing: .5px;
 }
 
-/* CELDAS */
 td{
     padding: 18px;
     color: #e2e8f0;
@@ -258,7 +251,6 @@ th,td{
     vertical-align: middle;
 }
 
-/* FILAS */
 tbody tr{
     transition: 0.2s ease;
 }
@@ -267,7 +259,6 @@ tbody tr:hover{
     background: rgba(59,130,246,0.08);
 }
 
-/* BOTONES ACCION */
 td button{
     border: none;
     padding: 9px 14px;
@@ -279,7 +270,6 @@ td button{
     margin: 0 4px;
 }
 
-/* EDITAR */
 td button:first-child{
     background: #2563eb;
     color: white;
@@ -289,7 +279,6 @@ td button:first-child:hover{
     background: #1d4ed8;
 }
 
-/* ELIMINAR */
 td button:last-child{
     background: #ef4444;
     color: white;
@@ -299,7 +288,6 @@ td button:last-child:hover{
     background: #dc2626;
 }
 
-/* RESPONSIVE */
 @media(max-width: 768px){
 
     body{
@@ -314,7 +302,6 @@ td button:last-child:hover{
         font-size: 1.5rem;
     }
 
-    /* Sidebar como overlay en móvil */
     .sidebar.abierto{
         position: fixed;
         top: 70px;
@@ -328,7 +315,6 @@ td button:last-child:hover{
         padding: 15px;
     }
 
-    /* Dashboard: 2 columnas en tablet */
     .dashboard{
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
@@ -342,7 +328,6 @@ td button:last-child:hover{
         font-size: 20px;
     }
 
-    /* Toolbar se apila verticalmente */
     .toolbar{
         flex-direction: column;
         align-items: stretch;
@@ -368,7 +353,6 @@ td button:last-child:hover{
         width: 100%;
     }
 
-    /* Tabla sin scroll, se adapta al ancho */
     .tabla-container{
         overflow-x: visible;
     }
@@ -395,7 +379,6 @@ td button:last-child:hover{
         white-space: nowrap;
     }
 
-    /* Stock bajo */
     .stock-bajo-container{
         padding: 15px;
     }
@@ -406,13 +389,11 @@ td button:last-child:hover{
         gap: 10px;
     }
 
-    /* Modal */
     .modal-content{
         width: 95%;
         padding: 20px;
     }
 
-    /* Toast */
     #toastContainer{
         left: 10px;
         right: 10px;
@@ -424,7 +405,6 @@ td button:last-child:hover{
     }
 }
 
-/* Extra small screens */
 @media(max-width: 480px){
 
     header h1{
@@ -456,7 +436,6 @@ td button:last-child:hover{
     }
 }
 
-/* MODAL */
 .modal{
     display: none;
     position: fixed;
@@ -470,7 +449,6 @@ td button:last-child:hover{
     z-index: 999;
 }
 
-/* CAJA */
 .modal-content{
     width: 90%;
     max-width: 420px;
@@ -493,7 +471,6 @@ td button:last-child:hover{
     animation: aparecer .25s ease;
 }
 
-/* TITULO */
 .modal-content h2{
     color: white;
 }
@@ -517,7 +494,6 @@ td button:last-child:hover{
 .modal-content button:active{
     transform: scale(0.98);
 }
-/* CERRAR */
 .cerrar{
     align-self: flex-end;
 
@@ -534,7 +510,6 @@ td button:last-child:hover{
     color: white;
 }
 
-/* ANIMACION */
 @keyframes aparecer{
 
     from{

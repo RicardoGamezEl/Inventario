@@ -21,7 +21,7 @@ function actualizarDashboard(){
     const totalProductos = productos.length;
     const stockTotal = productos.reduce((total, producto) => total + producto.stock, 0);
     const valorInventario = productos.reduce((total, producto) => total + (producto.price * producto.stock), 0);
-    const productosStockBajo = productos.filter(producto => producto.stock < 5);
+    const productosStockBajo = productos.filter(producto => producto.stock <= 5);
     const listaStockBajo = document.getElementById("listaStockBajo");
 
     listaStockBajo.innerHTML = "";
@@ -52,7 +52,6 @@ function actualizarDashboard(){
 
 btnAgregarProducto.addEventListener("click", () => {
     modalProductos.style.display = "flex";
-    cerrarModal();
 });
 
 document.getElementById("btnMenu").addEventListener("click",()=>{
@@ -174,7 +173,8 @@ formulario.addEventListener("submit", async (e) => {
         return;
     }
 
-    mostrarToast(productoEditadoId ? "Producto actualizado correctamente" : "Producto agregado correctamente", "success");
+    mostrarToast(productoEditadoId ? "Producto actualizado correctamente" : 
+        "Producto agregado correctamente", "success");
 
     formulario.reset();
     productoEditadoId = null;
@@ -242,7 +242,7 @@ async function editarProducto(id) {
         document.getElementById("editarPrecio").value =
             producto.price;
         document.getElementById("editarCantidad").value =
-            formatearMoneda(producto.stock);
+            producto.stock;
         document.getElementById("editarCategoria").value =
             producto.categoriaId;
         productoEditadoId = id;
@@ -258,10 +258,9 @@ async function guardarEdicion() {
         document.getElementById("editarNombre").value;
 
     const price = parseFloat(
-        document.getElementById("editarPrecio").value)  ;
+        document.getElementById("editarPrecio").value);
     const stock = parseInt(
-        formatearMoneda(document.getElementById("editarCantidad").value)
-    );
+        document.getElementById("editarCantidad").value);
     const categoriaId = parseInt(
         document.getElementById("editarCategoria").value);
     try{
