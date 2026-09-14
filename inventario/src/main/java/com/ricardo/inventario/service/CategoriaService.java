@@ -1,5 +1,5 @@
 package com.ricardo.inventario.service;
-import com.ricardo.inventario.dto.CategoriaReponseDTO;
+import com.ricardo.inventario.dto.CategoriaResponseDTO;
 import com.ricardo.inventario.dto.CategoriaRequestDTO;
 import com.ricardo.inventario.model.Categoria;
 import com.ricardo.inventario.repository.CategoriaRepository;
@@ -15,36 +15,36 @@ public class CategoriaService {
         this.categoriaRepository = categoriaRepository;
     }
 
-    public List<CategoriaReponseDTO> obtenerCategorias(){
+    public List<CategoriaResponseDTO> obtenerCategorias(){
         return categoriaRepository.findAll()
                 .stream()
-                .map(categoria -> new CategoriaReponseDTO(
+                .map(categoria -> new CategoriaResponseDTO(
                         categoria.getId(),
                         categoria.getName()
                 ))
                 .toList();
     }
-    public CategoriaReponseDTO obtenerCategoriaPorId(Long id){
+    public CategoriaResponseDTO obtenerCategoriaPorId(Long id){
         Categoria categoria = categoriaRepository
                 .findById(id)
                 .orElseThrow(() ->
                     new RuntimeException("Categoria no encontrada"));
-        return new CategoriaReponseDTO(
+        return new CategoriaResponseDTO(
                 categoria.getId(),
                 categoria.getName()
         );
     }
-    public CategoriaReponseDTO crearCategoria(CategoriaRequestDTO dto){
+    public CategoriaResponseDTO crearCategoria(CategoriaRequestDTO dto){
         Categoria categoria = new Categoria();
 
         categoria.setName(dto.getName());
         Categoria categoriaGuardada = categoriaRepository.save(categoria);
-        return new CategoriaReponseDTO(
+        return new CategoriaResponseDTO(
                 categoriaGuardada.getId(),
                 categoriaGuardada.getName()
         );
     }
-    public CategoriaReponseDTO actualizarCategoria(Long id, CategoriaRequestDTO dto){
+    public CategoriaResponseDTO actualizarCategoria(Long id, CategoriaRequestDTO dto){
         Categoria categoria = categoriaRepository
                 .findById(id)
                 .orElseThrow(()->
@@ -52,14 +52,14 @@ public class CategoriaService {
         categoria.setName(dto.getName());
 
         Categoria actualizada = categoriaRepository.save(categoria);
-        return new CategoriaReponseDTO(
+        return new CategoriaResponseDTO(
                 actualizada.getId(),
                 actualizada.getName()
         );
     }
 
     public void eliminarCategoria(Long id){
-        Categoria categoria = categoriaRepository
+       categoriaRepository
                 .findById(id)
                 .orElseThrow(() ->
                         new RuntimeException("Categoría no encontrada"));

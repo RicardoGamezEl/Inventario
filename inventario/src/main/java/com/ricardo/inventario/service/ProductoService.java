@@ -64,6 +64,9 @@ public class ProductoService {
         );
     }
     public void eliminarProducto(Long id) {
+        productoRepository
+            .findById(id)
+            .orElseThrow(() -> new RuntimeException("Producto No Encontrado"));
         productoRepository.deleteById(id);
     }
 

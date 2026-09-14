@@ -1,9 +1,9 @@
 package com.ricardo.inventario.dto;
-public class CategoriaReponseDTO {
+public class CategoriaResponseDTO {
     private Long id;
     private String name;
 
-    public CategoriaReponseDTO(Long id, String name){
+    public CategoriaResponseDTO(Long id, String name){
         this.id = id;
         this.name = name;
     }
