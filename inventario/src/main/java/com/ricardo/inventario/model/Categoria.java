@@ -1,6 +1,5 @@
 package com.ricardo.inventario.model;
 import java.util.List;
-
 import jakarta.persistence.*;
 
 @Entity

@@ -11,6 +11,7 @@ import java.util.List;
 public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
+    
     public CategoriaService(CategoriaRepository categoriaRepository) {
         this.categoriaRepository = categoriaRepository;
     }
@@ -24,6 +25,7 @@ public class CategoriaService {
                 ))
                 .toList();
     }
+    
     public CategoriaResponseDTO obtenerCategoriaPorId(Long id){
         Categoria categoria = categoriaRepository
                 .findById(id)
@@ -34,6 +36,7 @@ public class CategoriaService {
                 categoria.getName()
         );
     }
+    
     public CategoriaResponseDTO crearCategoria(CategoriaRequestDTO dto){
         Categoria categoria = new Categoria();
 
@@ -44,6 +47,7 @@ public class CategoriaService {
                 categoriaGuardada.getName()
         );
     }
+    
     public CategoriaResponseDTO actualizarCategoria(Long id, CategoriaRequestDTO dto){
         Categoria categoria = categoriaRepository
                 .findById(id)
