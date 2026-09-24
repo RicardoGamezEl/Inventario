@@ -142,7 +142,7 @@ class CategoriaServiceTest {
     }
 
     @Test
-    void eliminarCategoria_deberiaEliminarCategoriaSiNoExiste(){
+    void eliminarCategoria_deberiaLanzarExcepcionSiNoExiste(){
         when(categoriaRepository.findById(99L))
             .thenReturn(Optional.empty());
         

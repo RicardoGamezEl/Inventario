@@ -3,7 +3,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Min;
+import lombok.NoArgsConstructor;
 
+
+@NoArgsConstructor 
 public class ProductoRequestDTO {
     @NotBlank(message = "El Nombre Es Obligatorio")
     private String name;
@@ -18,6 +21,13 @@ public class ProductoRequestDTO {
     @NotNull(message = "El Stock Es Obligatorio")
     @Min(value = 0, message = "El Stock No Puede Ser Negativo")
     private Integer stock;
+
+    public ProductoRequestDTO(String name, double price, int stock, long categoriaId) {
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+        this.categoriaId = categoriaId;
+    }
 
     public String getName(){
         return name;
