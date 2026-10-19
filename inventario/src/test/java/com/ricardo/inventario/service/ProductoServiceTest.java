@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -20,6 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.ricardo.inventario.dto.ProductoRequestDTO;
 import com.ricardo.inventario.dto.ProductoResponseDTO;
+import com.ricardo.inventario.exception.RecursoNoEncontradoException;
 import com.ricardo.inventario.model.Categoria;
 import com.ricardo.inventario.model.Producto;
 import com.ricardo.inventario.repository.CategoriaRepository;
@@ -146,7 +148,7 @@ public class ProductoServiceTest {
         when(productoRepository.findById(99L))
             .thenReturn(Optional.empty());
         
-        RuntimeException exception = assertThrows(RuntimeException.class,() -> productoService.eliminarProducto(99L));
+        RecursoNoEncontradoException exception = assertThrows(RecursoNoEncontradoException.class,() -> productoService.eliminarProducto(99L));
 
         assertEquals("Producto No Encontrado", exception.getMessage());
 
@@ -175,13 +177,14 @@ public class ProductoServiceTest {
     }
     
     @Test
-    void obtenerProductoPorId_deberiaDevolverNullSiNoExiste(){
+    void obtenerProductoPorId_deberiaLanzarExceptionSiNoExiste(){
         when(productoRepository.findById(99L))
             .thenReturn(Optional.empty());
-
-        Producto resultado = productoService.obtenerProductoPorId(99L);
-
-        assertNull(resultado);
+        
+        assertThrows(
+            RecursoNoEncontradoException.class,
+            () -> productoService.obtenerProductoPorId(99L)
+        );
     }
 
     @Test 
@@ -219,24 +222,29 @@ public class ProductoServiceTest {
         assertEquals("Audio", resultado.getCategoria());
         assertEquals(1L, resultado.getCategoriaId());
     }
-
+    
     @Test
-    void actualizarProducto_productoNoExiste_deberiaDevolverNull(){
+    void actualizarProducto_deberiaLanzarExcepcionSiProductoNoExiste() {
         ProductoRequestDTO dto = new ProductoRequestDTO();
         dto.setName("Audifonos Gamer");
         dto.setPrice(1500.00);
         dto.setStock(20);
         dto.setCategoriaId(1L);
-        
+
         when(productoRepository.findById(99L))
                 .thenReturn(Optional.empty());
-        
-        ProductoResponseDTO resultado =
-                productoService.actualizarProducto(99L, dto);
-        
-        assertNull(resultado);
-    }
 
+        RecursoNoEncontradoException excepcion = assertThrows(
+                RecursoNoEncontradoException.class,
+                () -> productoService.actualizarProducto(99L, dto)
+        );
+
+        assertEquals("Producto No Encontrado", excepcion.getMessage());
+
+        verify(productoRepository, never())
+                .save(any(Producto.class));
+    }
+    
     @Test
     void actualizarProducto_deberiaLanzarExcepcionSiCategoriaNoExiste(){
         Producto producto = new Producto();

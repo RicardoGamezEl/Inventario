@@ -9,6 +9,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String,String> manejarErroresValidacion(MethodArgumentNotValidException ex){
@@ -23,5 +24,14 @@ public class GlobalExceptionHandler {
                     );
                 });
         return errores;
+    }
+
+    @ExceptionHandler(RecursoNoEncontradoException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> manejarRecursosNoEncontrados(RecursoNoEncontradoException ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("mensaje", ex.getMessage());
+
+        return error;
     }
 }
