@@ -4,6 +4,7 @@ import com.ricardo.inventario.dto.CategoriaRequestDTO;
 import com.ricardo.inventario.model.Categoria;
 import com.ricardo.inventario.repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
+import com.ricardo.inventario.exception.RecursoNoEncontradoException;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class CategoriaService {
         Categoria categoria = categoriaRepository
                 .findById(id)
                 .orElseThrow(() ->
-                    new RuntimeException("Categoria no encontrada"));
+                    new RecursoNoEncontradoException("Categoria No Encontrada"));
         return new CategoriaResponseDTO(
                 categoria.getId(),
                 categoria.getName()
@@ -52,7 +53,7 @@ public class CategoriaService {
         Categoria categoria = categoriaRepository
                 .findById(id)
                 .orElseThrow(()->
-                        new RuntimeException("Categoria No Encontrada"));
+                        new RecursoNoEncontradoException("Categoria No Encontrada"));
         categoria.setName(dto.getName());
 
         Categoria actualizada = categoriaRepository.save(categoria);
@@ -66,7 +67,7 @@ public class CategoriaService {
        categoriaRepository
                 .findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Categoría no encontrada"));
+                        new RecursoNoEncontradoException("Categoria No Encontrada"));
         categoriaRepository.deleteById(id);
     }
 }

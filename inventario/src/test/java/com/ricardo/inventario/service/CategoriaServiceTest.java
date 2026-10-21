@@ -65,7 +65,7 @@ class CategoriaServiceTest {
             () -> categoriaService.obtenerCategoriaPorId(99L)
         );
 
-        assertEquals("Categoria no encontrada", exception.getMessage());
+        assertEquals("Categoria No Encontrada", exception.getMessage());
     }
 
     @Test
@@ -152,7 +152,7 @@ class CategoriaServiceTest {
         );
 
         assertEquals(
-            "Categoría no encontrada",
+            "Categoria No Encontrada",
             exception.getMessage());
         
         verify(categoriaRepository, never())
