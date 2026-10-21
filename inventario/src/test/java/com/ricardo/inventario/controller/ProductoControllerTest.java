@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import com.ricardo.inventario.dto.ProductoRequestDTO;
 import com.ricardo.inventario.dto.ProductoResponseDTO;
+import com.ricardo.inventario.exception.RecursoNoEncontradoException;
 import com.ricardo.inventario.model.Producto;
 import com.ricardo.inventario.service.ProductoService;
 
@@ -233,6 +234,14 @@ public class ProductoControllerTest {
 
     verify(productoService).eliminarProducto(1L);
     }
-
     
+    @Test 
+    void obtenerProductoPorId_deberiaDevolverExcepcionSiNoExiste() throws Exception {
+        when(productoService.obtenerProductoPorId(99L))
+                .thenThrow(new RecursoNoEncontradoException("Producto No Encontrado"));
+
+        mockMvc.perform(get("/productos/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.mensaje").value("Producto No Encontrado"));
+    }
 }

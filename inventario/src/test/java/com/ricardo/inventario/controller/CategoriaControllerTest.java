@@ -2,6 +2,7 @@ package com.ricardo.inventario.controller;
 
 import com.ricardo.inventario.dto.CategoriaRequestDTO;
 import com.ricardo.inventario.dto.CategoriaResponseDTO;
+import com.ricardo.inventario.exception.RecursoNoEncontradoException;
 import com.ricardo.inventario.service.CategoriaService;
 
 import org.junit.jupiter.api.Test;
@@ -68,6 +69,16 @@ class CategoriaControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.name").value("Audio"));
+    }
+
+    @Test
+    void obtenerCategoriaPorId_deberiaDevolver404SiNoExiste() throws Exception {
+        when(categoriaService.obtenerCategoriaPorId(99L))
+                .thenThrow(new RecursoNoEncontradoException("Categoria No Encontrada"));      
+            
+        mockMvc.perform(get("/categorias/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.mensaje").value("Categoria No Encontrada"));
     }
 
     @Test
