@@ -1,155 +1,129 @@
-# 📦 Sistema de Inventario
+# Sistema de Inventario
 
-Sistema web de gestión de inventario desarrollado con **Java y Spring Boot**.
+Aplicación web para la gestión de productos y categorías, desarrollada con Java y Spring Boot. El sistema permite administrar el inventario desde una interfaz web y expone una API REST para realizar operaciones CRUD.
 
-La aplicación permite administrar productos y categorías mediante una API REST, además de proporcionar una interfaz web para consultar, crear, editar y eliminar información del inventario.
+El proyecto se desarrolló como práctica de arquitectura backend, persistencia de datos, validación de entradas y pruebas automatizadas.
 
----
+## Funcionalidades
 
-## ✨ Funcionalidades
+### Productos
+- Crear, consultar, actualizar y eliminar productos.
+- Buscar productos por nombre.
+- Filtrar productos por categoría.
+- Administrar precios y existencias.
+- Identificar productos con stock bajo.
+- Validar datos y mostrar mensajes de error.
 
-### 📦 Gestión de productos
-- Crear, consultar, editar y eliminar productos
-- Buscar productos por nombre
-- Filtrar productos por categoría
-- Control de stock
-- Validación de datos
-- Productos con stock bajo
-- Notificaciones mediante Toasts
-- Manejo de errores
+### Categorías
+- Crear, consultar, actualizar y eliminar categorías.
+- Asociar productos con sus categorías.
+- Validar la información recibida.
+- Gestionar errores cuando una categoría no existe.
 
-### 🏷️ Gestión de categorías
-- Crear, consultar, editar y eliminar categorías
-- Validación de datos
-- Manejo de errores
+### Dashboard
+- Total de productos y categorías.
+- Cantidad total de unidades en inventario.
+- Valor total del inventario.
+- Listado de productos con stock bajo.
 
-### 📊 Dashboard
-- Total de productos
-- Total de categorías
-- Stock total
-- Valor total del inventario
-- Productos con stock bajo
+### Interfaz web
+- Diseño adaptable a diferentes tamaños de pantalla.
+- Formularios y modales para crear y editar registros.
+- Búsqueda y filtros dinámicos.
+- Notificaciones para confirmar operaciones y mostrar errores.
 
-### 📱 Interfaz
-- Diseño responsive
-- Menú lateral
-- Modales para crear y editar
-- Estados vacíos
-- Notificaciones visuales
-- HTML, CSS y JavaScript
+## Tecnologías utilizadas
 
----
-
-## 🛠️ Tecnologías
-
-### Backend
-- **Java 21**
-- **Spring Boot 4.0.6**
+**Backend**
+- Java 21
+- Spring Boot 4.0.6
 - Spring MVC
 - Spring Data JPA
 - Hibernate
-- MySQL
-- Bean Validation
+- Jakarta Bean Validation
 - Lombok
-- Maven
 
-### API
-- REST API
-- Swagger / OpenAPI
-- SpringDoc OpenAPI 2.8.9
+**Base de datos**
+- MySQL
+- H2 para pruebas automatizadas
 
-### Frontend
+**Frontend**
 - HTML5
 - CSS3
 - JavaScript
 - Font Awesome
 
----
+**Herramientas**
+- Maven
+- Git y GitHub
+- SpringDoc OpenAPI
+- Swagger UI
+- JUnit y Mockito
 
-## 🏗️ Arquitectura
+## Arquitectura
 
-El proyecto utiliza una arquitectura por capas:
+El backend está organizado en capas para separar las responsabilidades de la aplicación.
 
 ```text
-Cliente
-   │
-   │ HTTP / JSON
-   ▼
+Cliente web
+    |
+    | HTTP / JSON
+    v
 Controller
-   │
-   ▼
+    |
+    v
 Service
-   │
-   ▼
+    |
+    v
 Repository
-   │
-   ▼
-MySQL
+    |
+    v
+Base de datos
 ```
 
-Los DTOs controlan los datos que entran y salen de la API, mientras que las entidades representan la información almacenada en la base de datos.
+Los controladores gestionan las peticiones HTTP, los servicios contienen la lógica de negocio y los repositorios se encargan del acceso a los datos mediante Spring Data JPA.
 
----
+Las entidades representan los datos persistidos y los DTOs permiten definir la información que recibe y devuelve la API. El manejo de excepciones está centralizado para mantener respuestas consistentes.
 
-## 📁 Estructura del proyecto
+## Estructura del proyecto
 
 ```text
 inventario/
-│
-├── .github/
-│
-├── .mvn/
-│   └── wrapper/
-│
 ├── src/
 │   ├── main/
-│   │   ├── java/
-│   │   │   └── com/ricardo/inventario/
-│   │   │       ├── controller/
-│   │   │       ├── dto/
-│   │   │       ├── exception/
-│   │   │       ├── model/
-│   │   │       ├── repository/
-│   │   │       └── service/
-│   │   │
+│   │   ├── java/com/ricardo/inventario/
+│   │   │   ├── controller/
+│   │   │   ├── dto/
+│   │   │   ├── exception/
+│   │   │   ├── model/
+│   │   │   ├── repository/
+│   │   │   └── service/
 │   │   └── resources/
-│   │       ├── img/
 │   │       ├── static/
-│   │       └── templates/
-│   │
+│   │       └── application.properties
 │   └── test/
-│       └── java/
-│           └── com/ricardo/inventario/
-│
+│       ├── java/
+│       └── resources/
+├── .mvn/
+├── mvnw
+├── mvnw.cmd
 ├── pom.xml
 └── README.md
 ```
 
-### 📂 Principales paquetes
-
-| Paquete | Responsabilidad |
-|---|---|
-| `controller` | Maneja las peticiones HTTP |
-| `service` | Contiene la lógica de negocio |
-| `repository` | Acceso a la base de datos mediante JPA |
-| `model` | Entidades del sistema |
-| `dto` | Objetos utilizados para transferir datos |
-| `exception` | Manejo de errores y excepciones |
-
----
-
-## ⚙️ Requisitos
+## Requisitos
 
 - Java 21
-- Maven
 - MySQL
 - Git
 
----
+El proyecto incluye Maven Wrapper, por lo que no es necesario instalar Maven globalmente.
 
-## 🚀 Instalación
+## Instalación y ejecución
 
 ### 1. Clonar el repositorio
+
+Reemplaza la URL de ejemplo por la dirección real del repositorio.
 
 ```bash
 git clone <URL_DEL_REPOSITORIO>
@@ -158,52 +132,58 @@ cd inventario
 
 ### 2. Crear la base de datos
 
+Ejecuta la siguiente instrucción en MySQL:
+
 ```sql
 CREATE DATABASE inventario;
 ```
 
 ### 3. Configurar las variables de entorno
 
-La aplicación utiliza:
+La aplicación obtiene las credenciales de MySQL mediante estas variables:
 
-```text
-DB_URL
-DB_USER
-DB_PASSWORD
+| Variable | Descripción |
+|---|---|
+| `DB_URL` | URL de conexión JDBC |
+| `DB_USER` | Usuario de MySQL |
+| `DB_PASSWORD` | Contraseña de MySQL |
+
+En PowerShell puedes configurarlas para la sesión actual:
+
+```powershell
+$env:DB_URL = "jdbc:mysql://localhost:3306/inventario"
+$env:DB_USER = "tu_usuario"
+$env:DB_PASSWORD = "tu_contraseña"
 ```
 
-Ejemplo:
+Utiliza las credenciales de tu entorno local. No guardes contraseñas reales en el repositorio.
 
-```text
-DB_URL=jdbc:mysql://localhost:3306/inventario
-DB_USER=tu_usuario
-DB_PASSWORD=tu_password
+### 4. Ejecutar la aplicación
+
+En Windows:
+
+```powershell
+.\mvnw.cmd spring-boot:run
 ```
 
-Las credenciales no se almacenan directamente en el código.
-
-### 4. Ejecutar el proyecto
+En Linux o macOS:
 
 ```bash
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
 
-El servidor estará disponible en:
+La aplicación estará disponible en:
 
-```text
 http://localhost:8008
-```
 
----
-
-## 🔌 Endpoints
+## Endpoints de la API
 
 ### Productos
 
 | Método | Endpoint | Descripción |
 |---|---|---|
 | GET | `/productos` | Obtener todos los productos |
-| GET | `/productos/{id}` | Obtener un producto |
+| GET | `/productos/{id}` | Obtener un producto por ID |
 | POST | `/productos` | Crear un producto |
 | PUT | `/productos/{id}` | Actualizar un producto |
 | DELETE | `/productos/{id}` | Eliminar un producto |
@@ -213,28 +193,56 @@ http://localhost:8008
 | Método | Endpoint | Descripción |
 |---|---|---|
 | GET | `/categorias` | Obtener todas las categorías |
-| GET | `/categorias/{id}` | Obtener una categoría |
+| GET | `/categorias/{id}` | Obtener una categoría por ID |
 | POST | `/categorias` | Crear una categoría |
 | PUT | `/categorias/{id}` | Actualizar una categoría |
 | DELETE | `/categorias/{id}` | Eliminar una categoría |
 
----
+## Documentación de la API
 
-## 📚 Swagger
+El proyecto utiliza SpringDoc OpenAPI para documentar los endpoints.
 
-Con el servidor iniciado:
+Con la aplicación en ejecución, accede a Swagger UI:
 
-```text
 http://localhost:8008/swagger-ui/index.html
+
+Desde allí puedes consultar y probar las operaciones disponibles.
+
+## Validaciones y manejo de errores
+
+La API utiliza Jakarta Bean Validation para validar los datos recibidos. Entre las reglas implementadas se encuentran:
+
+- El nombre del producto es obligatorio.
+- El precio debe ser mayor que cero.
+- La categoría es obligatoria al registrar un producto.
+- El stock no puede ser negativo.
+- El nombre de la categoría es obligatorio.
+- Los recursos inexistentes devuelven respuestas HTTP 404.
+- Los errores de validación devuelven respuestas HTTP 400.
+
+## Pruebas
+
+El proyecto incluye pruebas para controladores, servicios e integración HTTP.
+
+Para ejecutar la suite completa en Windows:
+
+```powershell
+.\mvnw.cmd clean test
 ```
 
-Desde Swagger puedes consultar y probar los endpoints disponibles.
+En Linux o macOS:
 
----
+```bash
+./mvnw clean test
+```
 
-## 🗃️ Configuración de la base de datos
+En la última ejecución se completaron 37 pruebas sin fallos ni errores.
 
-El archivo `application.properties` utiliza variables de entorno:
+Las pruebas de integración utilizan H2 en memoria para mantener los datos de prueba separados de la base de datos de desarrollo.
+
+## Configuración de persistencia
+
+La conexión a la base de datos se define en `src/main/resources/application.properties`:
 
 ```properties
 spring.application.name=inventario
@@ -248,47 +256,24 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 ```
 
-Hibernate está configurado para actualizar el esquema de la base de datos automáticamente durante el desarrollo.
+La propiedad `spring.jpa.hibernate.ddl-auto=update` permite actualizar el esquema durante el desarrollo. Para producción sería recomendable utilizar migraciones controladas y revisar la configuración de Hibernate.
 
----
+## Aprendizajes
 
-## 🧪 Validaciones
+Durante el desarrollo se practicaron los siguientes conceptos:
 
-La API utiliza **Bean Validation** para validar los datos recibidos.
+- Desarrollo de APIs REST con Spring Boot.
+- Arquitectura por capas y separación de responsabilidades.
+- Persistencia con JPA e Hibernate.
+- Relaciones entre entidades.
+- Uso de DTOs.
+- Validación de datos y manejo global de excepciones.
+- Consumo de APIs desde JavaScript.
+- Pruebas automatizadas con JUnit y Mockito.
+- Gestión del código con Git y GitHub.
 
-Entre las validaciones implementadas:
-
-- El nombre del producto es obligatorio.
-- El precio debe ser mayor a `0`.
-- La categoría es obligatoria.
-- El stock no puede ser negativo.
-- El nombre de la categoría es obligatorio.
-
----
-
-## 🎯 Objetivo del proyecto
-
-Este proyecto fue desarrollado como práctica para aplicar conceptos de desarrollo backend y frontend:
-
-- Desarrollo de APIs REST
-- Arquitectura por capas
-- Spring Boot
-- Spring Data JPA
-- Hibernate
-- Relaciones entre entidades
-- DTOs
-- Validación de datos
-- Manejo de excepciones
-- Operaciones CRUD
-- Consumo de APIs mediante JavaScript
-- Diseño responsive
-- MySQL
-- Git y GitHub
-
----
-
-## 👨‍💻 Autor
+## Autor
 
 **Ricardo Gamez Elizalde**
 
-Proyecto desarrollado como parte de mi aprendizaje y práctica en desarrollo de software.
+Proyecto desarrollado como parte de mi aprendizaje en desarrollo de software, con enfoque en Java, Spring Boot y desarrollo de aplicaciones web.
